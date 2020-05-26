@@ -1,7 +1,7 @@
 #!/bin/bash
 
-vinrangefrom=1750
-vinrangeto=1800
+vinrangefrom=$1
+vinrangeto=$2
 
 computevin () {
    vin=$1
