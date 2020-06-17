@@ -27,6 +27,8 @@ arrays=(
     "passingarrival"
     "shippedconvoy"
     "shippedrail"
+    "arrivedatjunctionpoint"
+    "arrivedrail"
     "finaldelivered"
     "cancelled"
     "unknown"
@@ -48,6 +50,8 @@ passing=()
 shippedfromplant=()
 shippedconvoy=()
 shippedrail=()
+arrivedatjunctionpoint=()
+arrivedrail=()
 finaldelivered=()
 cancelled=()
 unknown=()
@@ -70,6 +74,8 @@ titles=(
     "Passing Arrival"
     "Shipped CONVOY"
     "Shipped RAIL"
+    "Arrived at Junction Point"
+    "Arrived RAIL"
     "Final Delivered"
     "Cancelled"
     "Unknown"
@@ -163,6 +169,12 @@ sortData () {
                 "Shipped RAIL")
                     shippedrail+=("$line")
                     ;;
+                "Arrived at Junction Point")
+                    arrivedatjunctionpoint+=("$line")
+                    ;;
+                "Arrived RAIL")
+                    arrivedrail+=("$line")
+                    ;;
                 "Final Delivered")
                     finaldelivered+=("$line")
                     ;;
@@ -175,7 +187,7 @@ sortData () {
             esac
         else
             # If the next key and the prev key are different, this is a new VIN
-            if [ "$key" != "$prevkey" ] && [ "$status" == "Scheduled to Week" ]; then
+            if [ "$key" != "$nextkey" ] && [ "$key" != "$prevkey" ]; then
                 new+=("$line")
             fi
         fi
@@ -203,7 +215,7 @@ printData () {
                     type="- HEP R"
                 fi
             fi
-            echo $vin $type
+            echo $vin $type # $status
         done
     done
 }
