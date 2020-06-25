@@ -30,6 +30,7 @@ arrays=(
     "arrivedatjunctionpoint"
     "arrivedrail"
     "finaldelivered"
+    "delay"
     "cancelled"
     "unknown"
 )
@@ -53,6 +54,7 @@ shippedrail=()
 arrivedatjunctionpoint=()
 arrivedrail=()
 finaldelivered=()
+delay=()
 cancelled=()
 unknown=()
 
@@ -77,6 +79,7 @@ titles=(
     "Arrived at Junction Point"
     "Arrived RAIL"
     "Final Delivered"
+    "Delay"
     "Cancelled"
     "Unknown"
 )
@@ -178,6 +181,9 @@ sortData () {
                 "Final Delivered")
                     finaldelivered+=("$line")
                     ;;
+                "Delay")
+                    delay+=("$line")
+                    ;;
                 "Cancelled")
                     cancelled+=("$line")
                     ;;
@@ -213,6 +219,10 @@ printData () {
                 type="- HEP"
                 if [ "$model" == "GT350R" ]; then
                     type="- HEP R"
+                fi
+            else
+                if [ "$model" == "GT350R" ]; then
+                    type="- R"
                 fi
             fi
             echo $vin $type # $status

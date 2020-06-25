@@ -3,25 +3,6 @@
 vinrangefrom=$1
 vinrangeto=$2
 
-computevin () {
-   vin=$1
-   let first=8+42+6+30+28+24+2+90
-   let middle=27+40+35+30
-   let one=${vin:0:1}*5
-   let two=${vin:1:1}*4
-   let three=${vin:2:1}*3
-   let four=${vin:3:1}*2
-   let sum=first+middle+one+two+three+four
-   let mod=sum%11
-   checkdigit=""
-   if [ $mod == 10 ]; then 
-      checkdigit="X"
-   else
-      checkdigit=`echo $mod`
-   fi
-   echo "1FA6P8JZ"$checkdigit"L555"$1
-}
-
 getcarmodel () {
    echo "$1" | grep "card-title" | cut -d ' ' -f 5 | sed 's/<\/h4>//g'
 }
@@ -65,21 +46,26 @@ getproduction() {
    echo "$1" | grep -A 1 "Production Date" | tr -d '\n' | cut -d '>' -f 4 | sed 's/<\/td//g'
 }
 
+if [ "$#" -ne 2 ]; then
+    echo "Usage: ./pull-data.sh <from 4-digit VIN> <to 4-digit VIN>"
+    exit 1
+fi
+
 for i in $(seq -f "%04g" $vinrangefrom $vinrangeto); 
 do
-   vin=`computevin "$i"`
-   output=`curl -s https://trackmymustang.com/checkvin?vin=$vin`
+   vin=$(./compute-vin.sh "$i" "1FA6P8JZ" "L555")
+   output=$(curl -s https://trackmymustang.com/checkvin?vin=$vin)
    echo $output | grep "GT350" > /dev/null 2>&1; 
    if [ $? -eq 0 ]; then
-      model=`getcarmodel "$output"`
-      status=`getstatus "$output"`
-      color=`getcolorcode "$output"`
-      stripe=`getstripecode "$output"`
-      options=`getoptions "$output"`
-      dealer=`getdealer "$output"`
-      address=`getaddress "$output"`
-      receipt=`getreceipt "$output"`
-      production=`getproduction "$output"`
+      model=$(getcarmodel "$output")
+      status=$(getstatus "$output")
+      color=$(getcolorcode "$output")
+      stripe=$(getstripecode "$output")
+      options=$(getoptions "$output")
+      dealer=$(getdealer "$output")
+      address=$(getaddress "$output")
+      receipt=$(getreceipt "$output")
+      production=$(getproduction "$output")
       echo "$vin;$model;$status;$color;$stripe;$dealer;$address;$receipt;$production;$options"
    fi
 done

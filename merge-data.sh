@@ -21,6 +21,11 @@ loadData () {
     done
 }
 
+if [ "$#" -ne 2 ]; then
+    echo "Usage: ./merge-data.sh <old CSV path> <new CSV path>"
+    exit 1
+fi
+
 # load the old data and then the new data into the combined array
 # the order is determined by the alphabetical precedence of the trailing char
 loadData $oldfile a
