@@ -58,7 +58,7 @@ for i in $(seq -f "%04g" $VINRANGEFROM $VINRANGETO);
 do
    vin=$(./compute-vin.sh "$i" "$VINPREFIX" "$VINPOSTFIX")
    output=$(curl -s https://trackmymustang.com/checkvin?vin=$vin)
-   echo $output | grep "$MODEL" > /dev/null 2>&1; 
+   echo "$output" | grep "$MODEL" > /dev/null 2>&1; 
    if [ $? -eq 0 ]; then
       model=$(getcarmodel "$output")
       status=$(getstatus "$output")
