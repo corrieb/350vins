@@ -4,7 +4,7 @@ vinrangeto=19
 
 pullIfNotExists() {
     if [ ! -f $3 ]; then
-        ./pull-data.sh $1 $2 > "$3.tmp"
+        ./pull-data-GT350.sh $1 $2 > "$3.tmp"
         mv "$3.tmp" $3
     fi
 }

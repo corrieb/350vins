@@ -1,7 +1,10 @@
 #!/bin/bash
 
-vinrangefrom=$1
-vinrangeto=$2
+MODEL=$1
+VINRANGEFROM=$2
+VINRANGETO=$3
+VINPREFIX=$4
+VINPOSTFIX=$5
 
 getcarmodel () {
    echo "$1" | grep "card-title" | cut -d ' ' -f 5 | sed 's/<\/h4>//g'
@@ -46,16 +49,16 @@ getproduction() {
    echo "$1" | grep -A 1 "Production Date" | tr -d '\n' | cut -d '>' -f 4 | sed 's/<\/td//g'
 }
 
-if [ "$#" -ne 2 ]; then
-    echo "Usage: ./pull-data.sh <from 4-digit VIN> <to 4-digit VIN>"
+if [ "$#" -ne 5 ]; then
+    echo "Usage: ./pull-data.sh <model> <from 4-digit VIN> <to 4-digit VIN> <VIN prefix> <VIN postfix>"
     exit 1
 fi
 
-for i in $(seq -f "%04g" $vinrangefrom $vinrangeto); 
+for i in $(seq -f "%04g" $VINRANGEFROM $VINRANGETO); 
 do
-   vin=$(./compute-vin.sh "$i" "1FA6P8JZ" "L555")
+   vin=$(./compute-vin.sh "$i" "$VINPREFIX" "$VINPOSTFIX")
    output=$(curl -s https://trackmymustang.com/checkvin?vin=$vin)
-   echo $output | grep "GT350" > /dev/null 2>&1; 
+   echo $output | grep "$MODEL" > /dev/null 2>&1; 
    if [ $? -eq 0 ]; then
       model=$(getcarmodel "$output")
       status=$(getstatus "$output")
