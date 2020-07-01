@@ -19,7 +19,7 @@ do
     let start=$i*100
     let end=$start+99
     let rend=$end+1
-    pullIfNotExists $start $end data/$start-$rend-all.csv
+    pullIfNotExists $start $end data/$start-$rend-all.csv &
 done
 
 wait 
