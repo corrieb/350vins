@@ -13,6 +13,7 @@ tosha=$2
 # Note that the order of this must be the same as the titles array
 arrays=(
     "new" 
+    "schedweek"
     "schedday"
     "senttoplant"
     "bodyshop"
@@ -37,6 +38,7 @@ arrays=(
 
 # Array initialization to match the array names above
 new=()
+schedweek=()
 schedday=()
 received=()
 receivedatjunc=()
@@ -62,6 +64,7 @@ unknown=()
 # Note that the order of this must be the same as the arrays array
 titles=(
     "New VINs" 
+    "Scheduled to Week"
     "Scheduled to Day"
     "Sent to Plant"
     "Body Shop"
@@ -130,6 +133,9 @@ sortData () {
         if [ "$key" == "$nextkey" ] && [ "$status" != "$oldstatus" ]; then
 #            echo "$oldstatus" "=>" "$status"
             case "$status" in
+                "Scheduled to Week")
+                    schedweek+=("$line")
+                    ;;
                 "Scheduled to Day")
                     schedday+=("$line")
                     ;;
