@@ -1,7 +1,7 @@
 #!/bin/bash
 
 vinrangefrom=0
-vinrangeto=19
+vinrangeto=20
 
 olddir="old_data"
 datadir="data"
