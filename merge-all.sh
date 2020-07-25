@@ -26,3 +26,6 @@ do
         echo "No files to process: $oldFile -> $newFiles"
     fi
 done
+
+mv data new_data
+mv merged_data data

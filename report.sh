@@ -231,7 +231,7 @@ printData () {
                     type="- R"
                 fi
             fi
-            echo $vin $type $status
+            echo $vin $type # $status
         done
     done
 }
