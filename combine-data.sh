@@ -1,6 +1,6 @@
 #!/bin/bash
 vinrangefrom=5
-vinrangeto=20
+vinrangeto=21
 output="combined.csv"
 
 if [ -f $output ]; then
