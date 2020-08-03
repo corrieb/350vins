@@ -12,6 +12,8 @@ pullIfNotExists() {
 if [ ! -d old_data ]; then
     mv data old_data
     mkdir data
+else
+    echo "Old data exists. Stale data or incomplete run."
 fi
 
 for i in $(seq $vinrangefrom $vinrangeto); 
