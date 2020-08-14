@@ -1,11 +1,21 @@
 #!/bin/bash
 
 vinrangefrom=0
-vinrangeto=21
+vinrangeto=22
 
 olddir="old_data"
 datadir="data"
 targetdir="merged_data"
+
+if [ ! -d $olddir ]; then
+    echo "./$olddir does not exist. Nothing to merge."
+    exit 1
+fi
+
+if [ ! -d $datadir ]; then
+    echo "./$datadir does not exist. Nothing to merge."
+    exit 1
+fi
 
 if [ -d $targetdir ]; then
     echo "Merged data already exists"
@@ -26,6 +36,3 @@ do
         echo "No files to process: $oldFile -> $newFiles"
     fi
 done
-
-mv data new_data
-mv merged_data data

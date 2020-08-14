@@ -1,6 +1,6 @@
 #!/bin/bash
 vinrangefrom=8
-vinrangeto=21
+vinrangeto=22
 
 pullIfNotExists() {
     if [ ! -f $3 ]; then
@@ -14,6 +14,7 @@ if [ ! -d old_data ]; then
     mkdir data
 else
     echo "Old data exists. Stale data or incomplete run."
+    exit 1
 fi
 
 for i in $(seq $vinrangefrom $vinrangeto); 
