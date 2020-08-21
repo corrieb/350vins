@@ -33,6 +33,7 @@ arrays=(
     "finaldelivered"
     "delay"
     "cancelled"
+    "vehicledamaged"
     "unknown"
 )
 
@@ -58,6 +59,7 @@ arrivedrail=()
 finaldelivered=()
 delay=()
 cancelled=()
+vehicledamaged=()
 unknown=()
 
 # List of known status titles so we can iterate over them in order
@@ -84,6 +86,7 @@ titles=(
     "Final Delivered"
     "Delay"
     "Cancelled"
+    "Vehicle Damaged"
     "Unknown"
 )
 
@@ -192,6 +195,9 @@ sortData () {
                     ;;
                 "Cancelled")
                     cancelled+=("$line")
+                    ;;
+                "Vehicle Damaged - A")
+                    vehicledamaged+=("$line")
                     ;;
                 *)
                     unknown+=("$line")
