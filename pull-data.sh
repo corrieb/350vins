@@ -11,7 +11,7 @@ getcarmodel () {
 }
 
 getstatus () {
-   echo "$1" | grep "Car Status:" | cut -d '>' -f 3 | sed 's/<\/b//g'
+   echo "$1" | grep "Primary Status:" | cut -d '>' -f 3 | sed 's/<\/b//g'
 }
 
 getimgurl () {
