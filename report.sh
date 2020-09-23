@@ -30,10 +30,13 @@ arrays=(
     "shippedrail"
     "arrivedatjunctionpoint"
     "arrivedrail"
-    "finaldelivered"
+    "delivered"
     "delay"
     "cancelled"
     "vehicledamaged"
+    "inorderprocessing"
+    "inproduction"
+    "intransit"
     "unknown"
 )
 
@@ -56,10 +59,13 @@ shippedconvoy=()
 shippedrail=()
 arrivedatjunctionpoint=()
 arrivedrail=()
-finaldelivered=()
+delivered=()
 delay=()
 cancelled=()
 vehicledamaged=()
+inorderprocessing=()
+inproduction=()
+intransit=()
 unknown=()
 
 # List of known status titles so we can iterate over them in order
@@ -83,10 +89,13 @@ titles=(
     "Shipped RAIL"
     "Arrived at Junction Point"
     "Arrived RAIL"
-    "Final Delivered"
+    "Delivered"
     "Delay"
     "Cancelled"
     "Vehicle Damaged"
+    "In Order Processing"
+    "In Production"
+    "In Transit"
     "Unknown"
 )
 
@@ -187,8 +196,8 @@ sortData () {
                 "Arrived RAIL")
                     arrivedrail+=("$line")
                     ;;
-                "Final Delivered")
-                    finaldelivered+=("$line")
+                "Delivered")
+                    delivered+=("$line")
                     ;;
                 "Delay")
                     delay+=("$line")
@@ -198,6 +207,15 @@ sortData () {
                     ;;
                 "Vehicle Damaged - A")
                     vehicledamaged+=("$line")
+                    ;;
+                "In Order Processing")
+                    inorderprocessing+=("$line")
+                    ;;
+                "In Production")
+                    inproduction+=("$line")
+                    ;;
+                "In Transit")
+                    intransit+=("$line")
                     ;;
                 *)
                     unknown+=("$line")

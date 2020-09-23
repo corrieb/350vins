@@ -34,6 +34,7 @@ loadData $newfile b
 # sort the combined data so that duplicates are easily identified
 IFS=$'\n' sorted=($(sort <<<"${combined[*]}"))
 
+# loop works by peeking at the next line to see whether or not to keep the current line
 for i in "${!sorted[@]}";
 do
     line=${sorted[i]}
@@ -44,5 +45,11 @@ do
     if [ "$key" != "$nextkey" ]; then
         # remove the sort key from the output
         echo $line | cut -d ';' -f 3-
+    else
+        # Special case to preserve orders that were showing "Cancelled" and now show "In Order Processing"
+        isCancelled=`echo "$line" | grep "Cancelled"`
+        if [ "$isCancelled" != "" ]; then
+            sorted[i+1]=`echo "$nextline" | sed 's/In Order Processing/Cancelled/g'`
+        fi
     fi
 done

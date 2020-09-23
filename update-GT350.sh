@@ -1,6 +1,6 @@
 #!/bin/bash
 vinrangefrom=8
-vinrangeto=24
+vinrangeto=25
 
 pullIfNotExists() {
     if [ ! -f $3 ]; then
