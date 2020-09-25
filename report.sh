@@ -13,6 +13,11 @@ tosha=$2
 # Note that the order of this must be the same as the titles array
 arrays=(
     "new" 
+    "inorderprocessing"
+    "inproduction"
+    "awaitingshipment"
+    "intransit"
+    "delivered"
     "schedweek"
     "schedday"
     "senttoplant"
@@ -30,18 +35,19 @@ arrays=(
     "shippedrail"
     "arrivedatjunctionpoint"
     "arrivedrail"
-    "delivered"
     "delay"
     "cancelled"
     "vehicledamaged"
-    "inorderprocessing"
-    "inproduction"
-    "intransit"
     "unknown"
 )
 
 # Array initialization to match the array names above
 new=()
+inorderprocessing=()
+inproduction=()
+awaitingshipment=()
+intransit=()
+delivered=()
 schedweek=()
 schedday=()
 received=()
@@ -59,19 +65,20 @@ shippedconvoy=()
 shippedrail=()
 arrivedatjunctionpoint=()
 arrivedrail=()
-delivered=()
 delay=()
 cancelled=()
 vehicledamaged=()
-inorderprocessing=()
-inproduction=()
-intransit=()
 unknown=()
 
 # List of known status titles so we can iterate over them in order
 # Note that the order of this must be the same as the arrays array
 titles=(
     "New VINs" 
+    "In Order Processing"
+    "In Production"
+    "Awaiting Shipment"
+    "In Transit"
+    "Delivered"
     "Scheduled to Week"
     "Scheduled to Day"
     "Sent to Plant"
@@ -89,13 +96,9 @@ titles=(
     "Shipped RAIL"
     "Arrived at Junction Point"
     "Arrived RAIL"
-    "Delivered"
     "Delay"
     "Cancelled"
     "Vehicle Damaged"
-    "In Order Processing"
-    "In Production"
-    "In Transit"
     "Unknown"
 )
 
@@ -145,6 +148,21 @@ sortData () {
         if [ "$key" == "$nextkey" ] && [ "$status" != "$oldstatus" ]; then
 #            echo "$oldstatus" "=>" "$status"
             case "$status" in
+                "In Order Processing")
+                    inorderprocessing+=("$line")
+                    ;;
+                "In Production")
+                    inproduction+=("$line")
+                    ;;
+                "In Transit")
+                    intransit+=("$line")
+                    ;;
+                "Awaiting Shipment")
+                    awaitingshipment+=("$line")
+                    ;;
+                "Delivered")
+                    delivered+=("$line")
+                    ;;
                 "Scheduled to Week")
                     schedweek+=("$line")
                     ;;
@@ -196,9 +214,6 @@ sortData () {
                 "Arrived RAIL")
                     arrivedrail+=("$line")
                     ;;
-                "Delivered")
-                    delivered+=("$line")
-                    ;;
                 "Delay")
                     delay+=("$line")
                     ;;
@@ -207,15 +222,6 @@ sortData () {
                     ;;
                 "Vehicle Damaged - A")
                     vehicledamaged+=("$line")
-                    ;;
-                "In Order Processing")
-                    inorderprocessing+=("$line")
-                    ;;
-                "In Production")
-                    inproduction+=("$line")
-                    ;;
-                "In Transit")
-                    intransit+=("$line")
                     ;;
                 *)
                     unknown+=("$line")
