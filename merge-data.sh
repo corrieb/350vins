@@ -43,6 +43,18 @@ do
     nextkey=`echo "$nextline" | cut -d ';' -f 1`
     # if the next key is different, this must be the newer of the current key
     if [ "$key" != "$nextkey" ]; then
+        # Special case where a vehicle is in transit, but there's no longer data being shown. Assume Delivered
+        inTransit=`echo "$line" | grep "In Transit"`
+        if [ "$inTransit" != "" ]; then
+            prevKey=""
+            if [ i > 0 ]; then
+                prevLine=${sorted[i-1]}
+                prevKey=`echo "$prevLine" | cut -d ';' -f 1`
+            fi
+            if [ i == 0 ] || [ "$key" != "$prevKey" ]; then
+                line=`echo "$line" | sed 's/In Transit/Delivered/g'`
+            fi
+        fi
         # remove the sort key from the output
         echo $line | cut -d ';' -f 3-
     else
