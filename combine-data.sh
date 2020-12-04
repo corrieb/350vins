@@ -1,5 +1,5 @@
 #!/bin/bash
-vinrangefrom=10
+vinrangefrom=14
 vinrangeto=28
 output="combined.csv"
 
